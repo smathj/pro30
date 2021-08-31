@@ -35,24 +35,32 @@ import com.myspring.pro30.member.vo.MemberVO;
 
 @Controller("boardController")
 public class BoardControllerImpl  implements BoardController{
+	
 	private static final String ARTICLE_IMAGE_REPO = "C:\\board\\article_image";
+	
 	@Autowired
 	private BoardService boardService;
+	
 	@Autowired
 	private ArticleVO articleVO;
+	
+	
 	
 	@Override
 	@RequestMapping(value= "/board/listArticles.do", method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView listArticles(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
 		String viewName = (String)request.getAttribute("viewName");
 		List articlesList = boardService.listArticles();
+		
 		ModelAndView mav = new ModelAndView(viewName);
 		mav.addObject("articlesList", articlesList);
+		
 		return mav;
 		
 	}
 	
-	 //ÇÑ °³ ÀÌ¹ÌÁö ±Û¾²±â
+	 //ï¿½ï¿½ ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½
 	@Override
 	@RequestMapping(value="/board/addNewArticle.do" ,method = RequestMethod.POST)
 	@ResponseBody
@@ -89,7 +97,7 @@ public class BoardControllerImpl  implements BoardController{
 			}
 	
 			message = "<script>";
-			message += " alert('»õ±ÛÀ» Ãß°¡Çß½À´Ï´Ù.');";
+			message += " alert('ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½.');";
 			message += " location.href='"+multipartRequest.getContextPath()+"/board/listArticles.do'; ";
 			message +=" </script>";
 		    resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
@@ -98,7 +106,7 @@ public class BoardControllerImpl  implements BoardController{
 			srcFile.delete();
 			
 			message = " <script>";
-			message +=" alert('¿À·ù°¡ ¹ß»ýÇß½À´Ï´Ù. ´Ù½Ã ½ÃµµÇØ ÁÖ¼¼¿ä');');";
+			message +=" alert('ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½. ï¿½Ù½ï¿½ ï¿½Ãµï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ï¿½ï¿½');');";
 			message +=" location.href='"+multipartRequest.getContextPath()+"/board/articleForm.do'; ";
 			message +=" </script>";
 			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
@@ -108,7 +116,7 @@ public class BoardControllerImpl  implements BoardController{
 	}
 	
 	
-	//ÇÑ°³ÀÇ ÀÌ¹ÌÁö º¸¿©ÁÖ±â
+	//ï¿½Ñ°ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½
 	@RequestMapping(value="/board/viewArticle.do" ,method = RequestMethod.GET)
 	public ModelAndView viewArticle(@RequestParam("articleNO") int articleNO,
                                     HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -121,7 +129,7 @@ public class BoardControllerImpl  implements BoardController{
 	}
 	
 	/*
-	//´ÙÁß ÀÌ¹ÌÁö º¸¿©ÁÖ±â
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½
 	@RequestMapping(value="/board/viewArticle.do" ,method = RequestMethod.GET)
 	public ModelAndView viewArticle(@RequestParam("articleNO") int articleNO,
 			  HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -136,7 +144,7 @@ public class BoardControllerImpl  implements BoardController{
 	
 
 	
-  //ÇÑ °³ ÀÌ¹ÌÁö ¼öÁ¤ ±â´É
+  //ï¿½ï¿½ ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
   @RequestMapping(value="/board/modArticle.do" ,method = RequestMethod.POST)
   @ResponseBody
   public ResponseEntity modArticle(MultipartHttpServletRequest multipartRequest,  
@@ -170,7 +178,7 @@ public class BoardControllerImpl  implements BoardController{
          oldFile.delete();
        }	
        message = "<script>";
-	   message += " alert('±ÛÀ» ¼öÁ¤Çß½À´Ï´Ù.');";
+	   message += " alert('ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½.');";
 	   message += " location.href='"+multipartRequest.getContextPath()+"/board/viewArticle.do?articleNO="+articleNO+"';";
 	   message +=" </script>";
        resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
@@ -178,7 +186,7 @@ public class BoardControllerImpl  implements BoardController{
       File srcFile = new File(ARTICLE_IMAGE_REPO+"\\"+"temp"+"\\"+imageFileName);
       srcFile.delete();
       message = "<script>";
-	  message += " alert('¿À·ù°¡ ¹ß»ýÇß½À´Ï´Ù.´Ù½Ã ¼öÁ¤ÇØÁÖ¼¼¿ä');";
+	  message += " alert('ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½.ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½');";
 	  message += " location.href='"+multipartRequest.getContextPath()+"/board/viewArticle.do?articleNO="+articleNO+"';";
 	  message +=" </script>";
       resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
@@ -202,14 +210,14 @@ public class BoardControllerImpl  implements BoardController{
 		FileUtils.deleteDirectory(destDir);
 		
 		message = "<script>";
-		message += " alert('±ÛÀ» »èÁ¦Çß½À´Ï´Ù.');";
+		message += " alert('ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½.');";
 		message += " location.href='"+request.getContextPath()+"/board/listArticles.do';";
 		message +=" </script>";
 	    resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
 	       
 	}catch(Exception e) {
 		message = "<script>";
-		message += " alert('ÀÛ¾÷Áß ¿À·ù°¡ ¹ß»ýÇß½À´Ï´Ù.´Ù½Ã ½ÃµµÇØ ÁÖ¼¼¿ä.');";
+		message += " alert('ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½.ï¿½Ù½ï¿½ ï¿½Ãµï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ï¿½ï¿½.');";
 		message += " location.href='"+request.getContextPath()+"/board/listArticles.do';";
 		message +=" </script>";
 	    resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
@@ -219,7 +227,7 @@ public class BoardControllerImpl  implements BoardController{
   }  
   
 /*
-  //´ÙÁß ÀÌ¹ÌÁö ±Û Ãß°¡ÇÏ±â
+  //ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ß°ï¿½ï¿½Ï±ï¿½
   @Override
   @RequestMapping(value="/board/addNewArticle.do" ,method = RequestMethod.POST)
   @ResponseBody
@@ -235,7 +243,7 @@ public class BoardControllerImpl  implements BoardController{
 		articleMap.put(name,value);
 	}
 	
-	//·Î±×ÀÎ ½Ã ¼¼¼Ç¿¡ ÀúÀåµÈ È¸¿ø Á¤º¸¿¡¼­ ±Û¾´ÀÌ ¾ÆÀÌµð¸¦ ¾ò¾î¿Í¼­ Map¿¡ ÀúÀåÇÕ´Ï´Ù.
+	//ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ç¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½Í¼ï¿½ Mapï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
 	HttpSession session = multipartRequest.getSession();
 	MemberVO memberVO = (MemberVO) session.getAttribute("member");
 	String id = memberVO.getId();
@@ -269,7 +277,7 @@ public class BoardControllerImpl  implements BoardController{
 		}
 		    
 		message = "<script>";
-		message += " alert('»õ±ÛÀ» Ãß°¡Çß½À´Ï´Ù.');";
+		message += " alert('ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½.');";
 		message += " location.href='"+multipartRequest.getContextPath()+"/board/listArticles.do'; ";
 		message +=" </script>";
 	    resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
@@ -286,7 +294,7 @@ public class BoardControllerImpl  implements BoardController{
 
 		
 		message = " <script>";
-		message +=" alert('¿À·ù°¡ ¹ß»ýÇß½À´Ï´Ù. ´Ù½Ã ½ÃµµÇØ ÁÖ¼¼¿ä');');";
+		message +=" alert('ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½. ï¿½Ù½ï¿½ ï¿½Ãµï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ï¿½ï¿½');');";
 		message +=" location.href='"+multipartRequest.getContextPath()+"/board/articleForm.do'; ";
 		message +=" </script>";
 		resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
@@ -307,7 +315,7 @@ public class BoardControllerImpl  implements BoardController{
 		return mav;
 	}
 
-	//ÇÑ°³ ÀÌ¹ÌÁö ¾÷·ÎµåÇÏ±â
+	//ï¿½Ñ°ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½ï¿½Ï±ï¿½
 	private String upload(MultipartHttpServletRequest multipartRequest) throws Exception{
 		String imageFileName= null;
 		Iterator<String> fileNames = multipartRequest.getFileNames();
@@ -318,9 +326,9 @@ public class BoardControllerImpl  implements BoardController{
 			imageFileName=mFile.getOriginalFilename();
 			File file = new File(ARTICLE_IMAGE_REPO +"\\"+"temp"+"\\" + fileName);
 			if(mFile.getSize()!=0){ //File Null Check
-				if(!file.exists()){ //°æ·Î»ó¿¡ ÆÄÀÏÀÌ Á¸ÀçÇÏÁö ¾ÊÀ» °æ¿ì
-					file.getParentFile().mkdirs();  //°æ·Î¿¡ ÇØ´çÇÏ´Â µð·ºÅä¸®µéÀ» »ý¼º
-					mFile.transferTo(new File(ARTICLE_IMAGE_REPO +"\\"+"temp"+ "\\"+imageFileName)); //ÀÓ½Ã·Î ÀúÀåµÈ multipartFileÀ» ½ÇÁ¦ ÆÄÀÏ·Î Àü¼Û
+				if(!file.exists()){ //ï¿½ï¿½Î»ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+					file.getParentFile().mkdirs();  //ï¿½ï¿½Î¿ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ä¸®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+					mFile.transferTo(new File(ARTICLE_IMAGE_REPO +"\\"+"temp"+ "\\"+imageFileName)); //ï¿½Ó½Ã·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ multipartFileï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï·ï¿½ ï¿½ï¿½ï¿½ï¿½
 				}
 			}
 			
@@ -329,7 +337,7 @@ public class BoardControllerImpl  implements BoardController{
 	}
 	
 	/*
-	//´ÙÁß ÀÌ¹ÌÁö ¾÷·ÎµåÇÏ±â
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½ï¿½Ï±ï¿½
 	private List<String> upload(MultipartHttpServletRequest multipartRequest) throws Exception{
 		List<String> fileList= new ArrayList<String>();
 		Iterator<String> fileNames = multipartRequest.getFileNames();
@@ -340,9 +348,9 @@ public class BoardControllerImpl  implements BoardController{
 			fileList.add(originalFileName);
 			File file = new File(ARTICLE_IMAGE_REPO +"\\"+"temp"+"\\" + fileName);
 			if(mFile.getSize()!=0){ //File Null Check
-				if(!file.exists()){ //°æ·Î»ó¿¡ ÆÄÀÏÀÌ Á¸ÀçÇÏÁö ¾ÊÀ» °æ¿ì
-					file.getParentFile().mkdirs();  //°æ·Î¿¡ ÇØ´çÇÏ´Â µð·ºÅä¸®µéÀ» »ý¼º
-					mFile.transferTo(new File(ARTICLE_IMAGE_REPO +"\\"+"temp"+ "\\"+originalFileName)); //ÀÓ½Ã·Î ÀúÀåµÈ multipartFileÀ» ½ÇÁ¦ ÆÄÀÏ·Î Àü¼Û
+				if(!file.exists()){ //ï¿½ï¿½Î»ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+					file.getParentFile().mkdirs();  //ï¿½ï¿½Î¿ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ä¸®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+					mFile.transferTo(new File(ARTICLE_IMAGE_REPO +"\\"+"temp"+ "\\"+originalFileName)); //ï¿½Ó½Ã·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ multipartFileï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï·ï¿½ ï¿½ï¿½ï¿½ï¿½
 				}
 			}
 		}
